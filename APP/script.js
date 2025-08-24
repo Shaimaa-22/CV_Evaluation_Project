@@ -10,7 +10,6 @@ document.getElementById("evaluateBtn").addEventListener("click", async () => {
         return;
     }
 
-    // إظهار التحميل وإخفاء النتائج
     loadingDiv.style.display = "block";
     resultDiv.style.display = "none";
 
@@ -34,12 +33,10 @@ document.getElementById("evaluateBtn").addEventListener("click", async () => {
         const analysis = data.data.cv_analysis;
         const personal = data.data.personal_info;
 
-        // تحديث النقاط العامة
         const scoreValue = evalData.confidence || 0;
         document.getElementById("scoreValue").textContent = scoreValue.toFixed(1);
         document.getElementById("scoreBar").style.width = `${scoreValue}%`;
 
-        // تحديث مستوى السيرة الذاتية
         const levelBadge = document.getElementById("levelBadge");
         const level = evalData.level || "Unknown";
         levelBadge.textContent = `Level: ${level}`;
@@ -48,7 +45,6 @@ document.getElementById("evaluateBtn").addEventListener("click", async () => {
         else if (level === "Medium") levelBadge.classList.add("level-medium");
         else levelBadge.classList.add("level-low");
 
-        // عرض الميزات المستخرجة
         const featureList = document.getElementById("featureList");
         featureList.innerHTML = `
             <div class="feature-item"><strong>Specialization:</strong> ${analysis.specialization || "N/A"}</div>
@@ -59,7 +55,6 @@ document.getElementById("evaluateBtn").addEventListener("click", async () => {
             <div class="feature-item"><strong>Age:</strong> ${personal.age || 0}</div>
         `;
 
-        // عرض توزيع الاحتمالات
         const probChart = document.getElementById("probabilityChart");
         probChart.innerHTML = "";
         const scoreBreakdown = evalData.score_breakdown || {};
@@ -78,7 +73,6 @@ document.getElementById("evaluateBtn").addEventListener("click", async () => {
             `;
         }
 
-        // إظهار النتائج وإخفاء التحميل
         resultDiv.style.display = "block";
         loadingDiv.style.display = "none";
 
