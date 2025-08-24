@@ -9,9 +9,9 @@ document.getElementById("evaluateBtn").addEventListener("click", async () => {
         alert("Please enter your age and select a CV file.");
         return;
     }
-
+    
     loadingDiv.style.display = "block";
-    resultDiv.style.display = "none";
+    resultDiv.classList.add("hidden");
 
     const formData = new FormData();
     formData.append("age", age);
@@ -30,50 +30,40 @@ document.getElementById("evaluateBtn").addEventListener("click", async () => {
 
         const data = await response.json();
         const evalData = data.data.evaluation;
-        const analysis = data.data.cv_analysis;
-        const personal = data.data.personal_info;
-
-        const scoreValue = evalData.confidence || 0;
-        document.getElementById("scoreValue").textContent = scoreValue.toFixed(1);
-        document.getElementById("scoreBar").style.width = `${scoreValue}%`;
 
         const levelBadge = document.getElementById("levelBadge");
         const level = evalData.level || "Unknown";
         levelBadge.textContent = `Level: ${level}`;
-        levelBadge.className = "level-badge ";
+        levelBadge.className = "level-badge";
         if (level === "High") levelBadge.classList.add("level-high");
         else if (level === "Medium") levelBadge.classList.add("level-medium");
         else levelBadge.classList.add("level-low");
 
-        const featureList = document.getElementById("featureList");
-        featureList.innerHTML = `
-            <div class="feature-item"><strong>Specialization:</strong> ${analysis.specialization || "N/A"}</div>
-            <div class="feature-item"><strong>Experience:</strong> ${personal.estimated_experience || 0} years</div>
-            <div class="feature-item"><strong>Word Count:</strong> ${analysis.word_count || 0}</div>
-            <div class="feature-item"><strong>Sentence Count:</strong> ${analysis.sentence_count || 0}</div>
-            <div class="feature-item"><strong>Avg Sentence Length:</strong> ${(analysis.avg_sentence_length || 0).toFixed(1)} words</div>
-            <div class="feature-item"><strong>Age:</strong> ${personal.age || 0}</div>
-        `;
+        const scoreValue = evalData.confidence || 0;
+        document.getElementById("scoreValue").textContent = `${scoreValue.toFixed(1)}`;
+        document.getElementById("scoreBar").style.width = `${scoreValue}%`;
 
         const probChart = document.getElementById("probabilityChart");
         probChart.innerHTML = "";
+
         const scoreBreakdown = evalData.score_breakdown || {};
         for (const [label, percent] of Object.entries(scoreBreakdown)) {
             const pct = percent || 0;
+            const color = getColorForLevel(label);
             probChart.innerHTML += `
-                <div style="margin: 10px 0;">
-                    <div style="display: flex; justify-content: space-between;">
+                <div class="probability-item">
+                    <div class="probability-label">
                         <span>${label}</span>
                         <span>${pct.toFixed(1)}%</span>
                     </div>
-                    <div class="score-bar">
-                        <div class="score-fill" style="width: ${pct}%; background: ${getColorForLevel(label)}"></div>
+                    <div class="probability-bar">
+                        <div class="probability-fill" style="width:${pct}%; background:${color};"></div>
                     </div>
                 </div>
             `;
         }
 
-        resultDiv.style.display = "block";
+        resultDiv.classList.remove("hidden");
         loadingDiv.style.display = "none";
 
     } catch (err) {
