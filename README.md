@@ -54,20 +54,6 @@ The idea is to provide a tool that helps HR teams or companies **quickly and acc
 
 ---
 
-## Project Structure
-
-```
-CV_Evaluation_Project/
-│
-├── api.py                 # FastAPI interface for handling CVs
-├── processor.py           # Data processing and information extraction
-├── model_definitions.py   # BERT model definition for CV evaluation
-├── requirements.txt       # Required libraries for the project
-├── README.md              # Project documentation
-```
-
----
-
 ## How to Run
 
 1. **Install dependencies**:
@@ -134,4 +120,5 @@ python api.py
 ## License
 
 This project is open-source and can be used for educational and development purposes.
+
 
