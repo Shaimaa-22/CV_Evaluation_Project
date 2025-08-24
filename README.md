@@ -85,23 +85,6 @@ python api.py
 
 ---
 
-### Sample JSON Response:
-
-```json
-{
-  "name": "Ahmed Ali",
-  "email": "ahmed@example.com",
-  "phone": "+970599999999",
-  "education": ["Bachelor of Computer Science"],
-  "experience": ["Software Engineer at XYZ Company for 3 years"],
-  "skills": ["Python", "Machine Learning", "NLP"],
-  "score": 85,
-  "recommendation": "The CV is good and suitable for the desired position."
-}
-```
-
----
-
 ## Future Improvements
 
 * Support multiple languages for CVs (English and Arabic).
@@ -120,5 +103,6 @@ python api.py
 ## License
 
 This project is open-source and can be used for educational and development purposes.
+
 
 
